@@ -41,13 +41,10 @@
         function playRound(humanChoice, computerChoice) {
 
             const results = document.querySelector("#results");
-        
-
+    
         // if humas and computers same : deuce
             if (humanChoice === computerChoice) {
-                results.textContent = `Deuce! ${humanChoice} - ${computerChoice}`;
-                computerScore++;
-                humanScore++;
+                results.textContent = `Draw! ${humanChoice} - ${computerChoice}`;
             }
         // if humanChoice is Rock and Computer Paper: Computer wins
             else if (humanChoice === "Rock" && computerChoice === "Paper") {
@@ -81,6 +78,10 @@
             }
             else results.textContent = "Something went wrong here..";
 
+            if (humanScore === 4 || computerScore === 4 ) {
+                results.textContent += " Almost!";
+            }
+
             btns.appendChild(results);
         }
 
@@ -91,6 +92,9 @@
 
         
         btns.addEventListener("click", (event) => {
+            
+            const results = document.querySelector("#results");
+
             let target = event.target;
             let computerChoice = getComputerChoice();
             let humanChoice = "";
@@ -113,6 +117,16 @@
             const scoreComp = document.querySelector("#comp");
             scoreYou.textContent = `You: ${humanScore}`;
             scoreComp.textContent = `Computer: ${computerScore}`;
+
+            if (humanScore === 5 || computerScore === 5 ) {
+                if (humanScore > computerScore) {
+                    results.textContent = "Game Over! Congratulations, You Won!";
+                } else if (humanScore < computerScore) {
+                    results.textContent = "Game Over! You Lost!";
+                } else results.textContent = "Game Over! Draw!";
+                humanScore = 0;
+                computerScore = 0;
+            }
 
         })
 
